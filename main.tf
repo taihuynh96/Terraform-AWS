@@ -1,3 +1,6 @@
+locals {
+  production_availability_zones = ["${var.aws_region}a", "${var.aws_region}b"]
+}
 module "vpc" {
   source              = "./modules/vpc"
   region               = var.aws_region
