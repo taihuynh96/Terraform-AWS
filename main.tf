@@ -1,27 +1,10 @@
-terraform {
-  required_providers {
-    aws = {
-      source = "hashicorp/aws"
-      version = "~> 3.27"
-    }
-  } 
+module "vpc" {
+  source              = "./modules/vpc"
+  region               = var.aws_region
+  environment          = var.environment
+  vpc_cidr             = var.vpc_cidr
+  public_subnets_cidr  = var.public_subnets_cidr
+  private_subnets_cidr = var.private_subnets_cidr
+  db_subnets_cidr      = var.db_subnets_cidr
+  availability_zones   = local.production_availability_zones
 }
-
-provider "aws" {
-  region = "ap-southeast-1"
-}
-locals {
-  ami = "ami-04d9e855d716f9c99"
-  instance_type = "t2.micro"
-  name = "demo-lab"
-}
-
-resource "aws_instance" "myapp" {
-  ami = local.ami
-  instance_type = local.instance_type
-  tags = {
-  Name = local.name
-  }
-}
-
-
